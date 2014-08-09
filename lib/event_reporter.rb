@@ -1,19 +1,9 @@
+require 'csv'
+
 class EventReporter
-  attr_reader :queue
-
-  def initialize
-    @queue = Array.new
-  end
-
-  def run
-    puts "hello world"
-  end
-
-  def add_query(query)
-    queue << query
-  end
-
-  def clear
-    @queue = []
+  def print
+    CSV.foreach("../data/event_attendees.csv") do |row|
+      puts row
+    end
   end
 end
