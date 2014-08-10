@@ -1,8 +1,8 @@
 class Queue
-  attr_reader :queue
+  attr_reader :attendees
 
   def initialize
-    @queue = Array.new
+    @attendees = Array.new
   end
 
   def run
@@ -14,6 +14,14 @@ class Queue
   end
 
   def clear
-    @queue = []
+    @attendees = []
+  end
+
+  def count
+    @attendees.count
+  end
+
+  def save_to(filename)
+    puts 'saving....'
   end
 end

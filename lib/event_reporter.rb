@@ -1,76 +1,136 @@
 require 'csv'
+require_relative './printer'
+require_relative './queue'
+require_relative './attendee_repo'
+
+#questions:
+#
+# how to handle the attendee repo. Do we initialize with it? do we reassign is a new fileis loaded? wtf
+
+#nested case statements? wtf holy ugly batman
 
 class EventReporter
-  attr_reader :queue
+  attr_reader :queue, :printer, :repo, :command
 
   def initialize
-    @queue = Queue.new
+    @queue   = Queue.new
+    @printer = Printer.new
+    @repo    = AttendeeRepo.new
   end
+
   def run
-    puts "Welcome to Event Reporter"
-    puts 'Please choose from the menu'
-    user_input = gets.strip.downcase
-    parse_user_input(user_input)
+    printer.welcome_intro
+    @command = get_input
+    until @command == 'quit'
+      menu
+      @command = get_input
+    end
+    printer.goodbye
   end
 
-  def parse_user_input(user_input)
-    #load 'data/acrobats_anonymous.rb'
-    arr = user_input.split(' ')
-    command       = arr[0]
-    option_two    = arr[1]
-    option_three  = arr[2]
-    option_four   = arr[3]
+  private
+  def get_input
+    printer.prompt
+    gets.strip.downcase.split(' ')
   end
 
-  def menu(sanitized_input)
-    case sanitized_input
-    when 'load'
-      AttendeeRepo.new(filepath)
-    when 'help'
-      if sanitized_input.count == 1
-        help_menu
-      else
-        help(command)
-      end
-    when 'queue count'
-      queue.count
-    when 'queue clear'
-      queue.clear
-    when 'queue print'
-      queue.display
-    when 'queue print by <attribute>'
-      queue.print_by(attribute)
-    when 'queue save to <filename.csv>'
-      queue.save_to(filename)
-    when 'find <attribute> <criteria>'
-      find(attribute, criteria)
-    else
-      incorrect_entry
+  def menu
+    case
+    when find?(command[0])
+      repo.find(command[1], command[2])
+    when load?(command[0])
+      @repo = AttendeeRepo.new(command[1])
+      printer.file_loaded(command[1])
+    when queue?(command[0])
+      queue_sub_menu
+    when help?
       help_menu
+    when help?
+      printer.goodbye
+    else
+      input_error
     end
   end
 
-  def incorrect_entry
-    puts 'Incorrect Entry'
+  def queue_sub_menu
+    case
+    when count?
+      printer.display_queue_count(queue.count)
+    when clear?
+      return printer.fail_message('clear') if queue.attendees.empty?
+      queue.clear
+      printer.successfully_cleared(queue.count)
+    when print?
+      print_menu
+    when save_to?
+      return printer.fail_message('save') if queue.attendees.empty?
+
+      # queue.save_to(filename)
+      printer.display_save_info(command[3])
+    else
+      input_error
+    end
+  end
+
+  def print_menu
+    return printer.display_queue(queue.attendees) if command[2] != 'by'
+
+    #repo.find_by(command[4])
+    puts "sorting something to print here..."
   end
 
   def help_menu
-    puts "`help`                         - help menu"
-    puts "`help <command>`               - command help"
-    puts "`queue count`                  - counts attendees in queue"
-    puts "`queue clear`                  - clears queue"
-    puts "`queue print`                  - displays attendees in queue"
-    puts "`queue print by <attribute>`   - displays specific attendees"
-    puts "`queue save to <filename.csv>` - exports attendees in queue"
+    case
+    when count?             then printer.description_count
+    when clear?             then printer.description_clear
+    when print?             then printer.description_print
+    when save_to?           then printer.description_save_to
+    when find?(command[1])  then printer.description_find
+    when load?(command[1])  then printer.description_load
+    when queue?(command[1]) then printer.description_queue
+    else
+      printer.display_commands
+    end
   end
 
-  def help(command)
-    case command
-    when 'count'    then puts "printer.description('count')"
-    when 'clear'    then puts "printer.description('clear')"
-    when 'print'    then puts "printer.description('print')"
-    when 'print by' then puts "printer.description('print_by')"
-    when 'save to'  then puts "printer.description('save_to')"
-    when 'find'     then puts "printer.description('find')"
+  def load?(arg)
+    arg == 'load'
+  end
+
+  def find?(arg)
+    arg == 'find'
+  end
+
+  def queue?(arg)
+    arg == 'queue'
+  end
+
+  def help?
+    command[0] == 'help'
+  end
+
+  def count?
+    command[1] == 'count'
+  end
+
+  def clear?
+    command[1] == 'clear'
+  end
+
+  def print?
+    command[1] == 'print'
+  end
+
+  def print_by?
+    command[1] == 'print' && command[2] == 'by'
+  end
+
+  def save_to?
+    command[1] == 'save' && command[2] == 'to'
+  end
+
+  def input_error
+    printer.incorrect_entry
+    printer.display_commands
   end
 end
