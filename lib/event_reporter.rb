@@ -1,12 +1,4 @@
 require 'csv'
-# require_relative './printer'
-# require_relative './menu'
-
-#questions:
-#
-# how to handle the attendee repo. Do we initialize with it? do we reassign is a new fileis loaded? wtf
-
-#nested case statements? wtf holy ugly batman
 
 class EventReporter
   attr_reader :printer, :command, :menu, :args
