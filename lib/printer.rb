@@ -1,7 +1,7 @@
 require 'colorize'
 
 class Printer
-  def welcome_intro
+  def intro
     puts "---------------------------".blue
     puts " Welcome to Event Reporter".white
     puts "---------------------------\n\n".blue
@@ -59,7 +59,7 @@ class Printer
     puts "\nFile exported to data/#{filename}.csv\n".cyan
   end
 
-  def goodbye
+  def outro
     puts '\nGoodbye\n'.cyan
   end
 
@@ -100,5 +100,9 @@ class Printer
 
   def description_queue
     puts "\n#{'`help queue`'.cyan} - The Queue holds all of the data from the current search until it is exported, cleared, or the next search is executed using the #{`find <attribute> <criteria>`.cyan} command."
+  end
+
+  def display_query(query)
+    puts query
   end
 end
