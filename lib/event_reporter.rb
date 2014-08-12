@@ -6,10 +6,11 @@ class EventReporter
 
   def initialize
     @printer = Printer.new
-    @menu    = new
+    @menu    = Menu.new
     @command = ''
     @args    = ''
     @queue   = Queue.new
+    @repo    = AttendeeRepo.new
   end
 
   def run
@@ -32,7 +33,7 @@ class EventReporter
     case command
     when 'find'  then find_menu(args)
     when 'load'  then display(:file_loaded, load_menu(args))
-    when 'queue' then display(:display_queue_count, queue_sub_menu(args))
+    when 'queue' then queue_sub_menu(args)
     when 'help'  then help_menu
     when 'quit'  then printer.goodbye
     else
@@ -56,16 +57,17 @@ class EventReporter
   end
 
   def queue_sub_menu(args)
+    arg = args.join
     case
-    when count?(args)
+    when count?(arg)
       printer.display_queue_count(queue.count)
-    when clear?(args)
+    when clear?(arg)
       return printer.fail_message('clear') if queue.attendees.empty?
       queue.clear
       printer.successfully_cleared(queue.count)
-    when print?(args)
+    when print?(arg)
       print_menu
-    when save_to?(args)
+    when save_to?(arg)
       return printer.fail_message('save') if queue.attendees.empty?
 
       # queue.save_to(filename)
@@ -115,9 +117,9 @@ class EventReporter
     end
   end
 
-  def input_error
-    puts "error"
-  end
+  # def input_error
+  #   puts "error"
+  # end
 
   def print_menu
     return printer.display_queue(queue.attendees) if command[2] != 'by'
