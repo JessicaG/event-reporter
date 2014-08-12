@@ -1,5 +1,5 @@
 class Queue
-  attr_reader :attendees
+  attr_accessor :attendees
 
   def initialize
     @attendees = Array.new

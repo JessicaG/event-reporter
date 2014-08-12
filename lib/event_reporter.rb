@@ -32,7 +32,7 @@ class EventReporter
   def command_menu
     case command
     when 'find'  then find_menu(args)
-    when 'load'  then display(:file_loaded, load_menu(args))
+    when 'load'  then load_menu(args)
     when 'queue' then queue_sub_menu(args)
     when 'help'  then help_menu
     when 'quit'  then printer.goodbye
@@ -97,7 +97,6 @@ class EventReporter
       filepath = args.flatten + '.csv'
     end
     @repo = AttendeeRepo.new(filepath)
-    filepath
   end
 
   def find_menu(args)
@@ -106,14 +105,14 @@ class EventReporter
     criteria  = args[1]
 
     case attribute
-    when 'first_name' then repo.find_by_first_name(criteria)
-    when 'last_name'  then repo.find_by_last_name(criteria)
-    when 'email'      then repo.find_by_email(criteria)
-    when 'phone'      then repo.find_by_phone(criteria)
-    when 'street'     then repo.find_by_street(criteria)
-    when 'city'       then repo.find_by_city(criteria)
-    when 'state'      then repo.find_by_state(criteria)
-    when 'zipcode'    then repo.find_by_zipcode(criteria)
+    when 'first_name' then queue.attendees = repo.find_by_first_name(criteria)
+    when 'last_name'  then queue.attendees = repo.find_by_last_name(criteria)
+    when 'email'      then queue.attendees = repo.find_by_email(criteria)
+    when 'phone'      then queue.attendees = repo.find_by_phone(criteria)
+    when 'street'     then queue.attendees = repo.find_by_street(criteria)
+    when 'city'       then queue.attendees = repo.find_by_city(criteria)
+    when 'state'      then queue.attendees = repo.find_by_state(criteria)
+    when 'zipcode'    then queue.attendees = repo.find_by_zipcode(criteria)
     end
   end
 

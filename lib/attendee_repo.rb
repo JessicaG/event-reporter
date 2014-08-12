@@ -17,49 +17,49 @@ class AttendeeRepo
 
   def find_by_first_name(input)
     attendees.find_all do |attendee|
-      attendee.first_name == input
+      attendee.first_name.downcase == input.downcase
     end
   end
 
   def find_by_last_name(input)
     attendees.find_all do |attendee|
-      attendee.last_name == input
+      attendee.last_name.downcase == input.downcase
     end
   end
 
   def find_by_email_address(input)
     attendees.find_all do |attendee|
-      attendee.email_address == input
+      attendee.email_address.downcase == input.downcase
     end
   end
 
   def find_by_home_phone(input)
     attendees.find_all do |attendee|
-      attendee.home_phone == input
+      attendee.home_phone.downcase == input.downcase
     end
   end
 
   def find_by_street(input)
     attendees.find_all do |attendee|
-      attendee.street == input
+      attendee.street.downcase == input.downcase
     end
   end
 
   def find_by_city(input)
     attendees.find_all do |attendee|
-      attendee.city == input
+      attendee.city.downcase == input.downcase
     end
   end
 
   def find_by_state(input)
     attendees.find_all do |attendee|
-      attendee.state == input
+      attendee.state.downcase == input.downcase
     end
   end
 
   def find_by_zipcode(input)
     attendees.find_all do |attendee|
-      attendee.zipcode == input
+      attendee.zipcode.downcase == input.downcase
     end
   end
 end
