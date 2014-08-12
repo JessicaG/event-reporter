@@ -10,7 +10,7 @@ class Attendee
               :zipcode
 
   def initialize(data)
-    @reg_date      = data[:regdate]
+    @reg_date      = data[:regdate] #normalize.reg_date
     @first_name    = data[:first_name]
     @last_name     = data[:last_name]
     @email_address = data[:email_address]

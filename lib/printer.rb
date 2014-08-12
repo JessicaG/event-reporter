@@ -61,7 +61,7 @@ class Printer
   end
 
   def outro
-    puts '\nGoodbye\n'.cyan
+    puts "\nGoodbye\n".cyan
   end
 
   def file_loaded(filepath)
@@ -103,7 +103,4 @@ class Printer
     puts "\n#{'`help queue`'.cyan} - The Queue holds all of the data from the current search until it is exported, cleared, or the next search is executed using the #{`find <attribute> <criteria>`.cyan} command."
   end
 
-  def display_query(query)
-    puts query
-  end
 end

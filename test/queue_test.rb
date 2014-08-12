@@ -1,4 +1,4 @@
-require_relative './spec_helper'
+require_relative './test_helper'
 require_relative '../lib/queue'
 
 class QueueTest < Minitest::Test
@@ -23,7 +23,7 @@ class QueueTest < Minitest::Test
   end
 
   def test_print
-    
+
   end
 
   def print_by
