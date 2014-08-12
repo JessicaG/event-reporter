@@ -20,32 +20,4 @@ class Attendee
     @state         = data[:state]
     @zipcode       = data[:zipcode]
   end
-
-  #   def search_reg_date
-  #   end
-  #
-  #   def first_name
-  #   end
-  #
-  #   def last_name
-  #   end
-  #
-  #   def email_address
-  #   end
-  #
-  #   def home_phone
-  #   end
-  #
-  #   def street
-  #   end
-  #
-  #   def city
-  #   end
-  #
-  #   def state
-  #   end
-  #
-  #   def zipcode
-  #   end
-
 end

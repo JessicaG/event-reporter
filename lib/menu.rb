@@ -6,7 +6,7 @@ class Menu
     @queue = Queue.new
   end
 
-  def load_menu
+  def load_menu(filepath)
     @repo = AttendeeRepo.new(filepath)
     #printer.file_loaded(args[0]) if success message true
   end

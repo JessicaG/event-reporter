@@ -5,7 +5,7 @@ class AttendeeRepo
   attr_reader :csv, :attendees
 
   def initialize(filepath='./data/event_attendees.csv')
-    @csv = CSV.open(filepath, headers: true, header_converters: :symbol)
+    @csv       = CSV.open(filepath, headers: true, header_converters: :symbol)
     @attendees = csv.map { |row| Attendee.new(row) }
   end
 

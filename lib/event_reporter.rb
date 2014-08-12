@@ -1,4 +1,5 @@
 require 'csv'
+require 'pry'
 
 class EventReporter
   attr_reader :printer, :command, :menu, :args

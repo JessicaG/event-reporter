@@ -1,4 +1,5 @@
 require 'colorize'
+require 'pry'
 
 class Printer
   def intro
