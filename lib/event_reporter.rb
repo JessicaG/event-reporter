@@ -1,15 +1,13 @@
 require 'csv'
-require 'pry'
 
 class EventReporter
-  attr_reader :printer, :command, :menu, :args, :repo, :queue
+  attr_reader :printer, :command, :args, :repo, :queue
 
   def initialize
     @printer = Printer.new
     @command = ''
     @args    = ''
     @queue   = MyQueue.new
-    # @repo    = AttendeeRepo.new
   end
 
   def run
@@ -53,8 +51,8 @@ class EventReporter
     when find?(arg)       then printer.description_find
     when load?(arg)       then printer.description_load
     when queue?(arg)      then printer.description_queue
-    # else
-    #   printer.display_commands
+    else
+      input_error
     end
   end
 
