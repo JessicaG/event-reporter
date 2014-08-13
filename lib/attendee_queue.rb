@@ -1,16 +1,12 @@
-class MyQueue
+class AttendeeQueue
   attr_accessor :attendees
 
   def initialize
     @attendees = Array.new
   end
 
-  def run
-    puts "hello world"
-  end
-
   def add_query(query)
-    queue << query
+    attendees << query
   end
 
   def clear
@@ -18,7 +14,7 @@ class MyQueue
   end
 
   def count
-    @attendees.count
+    attendees.count
   end
 
   def save_to(filename)
@@ -27,7 +23,6 @@ class MyQueue
 
   def format_output(attendees)
     attendees.each
-
   end
 
   def print_by_attribute(attribute)

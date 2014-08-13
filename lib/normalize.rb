@@ -1,5 +1,6 @@
 class Normalize
   attr_reader :failure
+
   def initialize
     @failure = 'no info available'
   end

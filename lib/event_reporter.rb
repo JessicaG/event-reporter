@@ -7,7 +7,7 @@ class EventReporter
     @printer = Printer.new
     @command = ''
     @args    = ''
-    @queue   = MyQueue.new
+    @queue   = AttendeeQueue.new
   end
 
   def run

@@ -2,6 +2,7 @@ require 'colorize'
 require 'terminal-table'
 
 class Printer
+
   def intro
     puts "---------------------------".blue
     puts " Welcome to Event Reporter".white
