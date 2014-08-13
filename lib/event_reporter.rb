@@ -75,7 +75,6 @@ class EventReporter
       printer.print_by(results)
     when save_to?(arg)
       return printer.fail_message('save') if queue.attendees.empty?
-
       # queue.save_to(filename)
       printer.display_save_info(filename)
     else
@@ -92,10 +91,6 @@ class EventReporter
     printer.display_commands
   end
 
-  def quit?
-    command == 'quit'
-  end
-
   def load_menu(args)
     if args.empty?
       filepath = 'data/event_attendees.csv'
@@ -107,7 +102,7 @@ class EventReporter
   end
 
   def find_menu(args)
-    return "\nIncomplete Query - 'find <attribute> <criteria>'\n" if args.count < 2
+    return printer.incomplete_query if args.count < 2
     attribute = args[0]
     criteria  = args[1]
 
@@ -120,14 +115,13 @@ class EventReporter
     when 'city'       then queue.attendees = repo.find_by_city(criteria)
     when 'state'      then queue.attendees = repo.find_by_state(criteria)
     when 'zipcode'    then queue.attendees = repo.find_by_zipcode(criteria)
+    else
+      printer.incomplete_query
     end
   end
 
-  def print_menu
-    return printer.display_queue(queue.attendees) if command[2] != 'by'
-
-    #repo.find_by(command[4])
-    puts "sorting something to print here..."
+  def quit?
+    command == 'quit'
   end
 
   def load?(arg)

@@ -124,4 +124,8 @@ class Printer
     puts "\nNo data to display\n\n".red
   end
 
+  def incomplete_query
+    puts "\nIncomplete Query - 'find <attribute> <criteria>'\n"
+  end
+
 end
