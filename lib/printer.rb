@@ -41,13 +41,13 @@ class Printer
   end
 
   def display_queue(queue)
-    puts "\n\n--------------------------------------------------------------------------------".blue
-    puts "  LAST NAME\tFIRST NAME\tEMAIL\tZIPCODE\tCITY\tSTATE\tADDRESS\tPHONE".cyan
-    puts '--------------------------------------------------------------------------------'.blue
-    return puts "\nNo data to display\n\n".red if queue.empty?
-    queue.each do |attendee|
-      print "#{attendee.last_name} #{attendee.first_name}\t#{attendee.email_address} #{attendee.city}\n"
+    rows = Array.new
+    queue.each do |a|
+      rows << [a.last_name, a.first_name, a.email_address, a.zipcode, a.city, a.state, a.street, a.home_phone,]
     end
+    table = Terminal::Table.new :headings => ['LAST NAME', 'FIRST NAME', 'EMAIL', 'ZIPCODE', 'CITY', 'STATE', 'ADDRESS', 'PHONE'], :rows => rows
+
+    puts "\n\n#{table}\n\n"
   end
 
   def failed_save
@@ -102,9 +102,16 @@ class Printer
   end
 
   def print_by(results)
+    rows = Array.new
     results.each do |r|
-      puts "#{r.reg_date}\t#{r.first_name}\t#{r.last_name}\t#{r.email_address}\t#{r.home_phone}\t#{r.street}\t#{r.city}\t#{r.state}\t#{r.zipcode}"
+      rows << [r.first_name, r.last_name, r.email_address, r.zipcode, r.street, r.city, r.state, r.home_phone]
     end
+    table = Terminal::Table.new :headings => ['LAST NAME', 'FIRST NAME', 'EMAIL', 'ZIPCODE', 'CITY', 'STATE', 'ADDRESS', 'PHONE'], :rows => rows
+    puts "\n\n#{table}\n\n"
+  end
+
+  def no_results
+    puts "\nNo data to display\n\n".red
   end
 
 end

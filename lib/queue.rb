@@ -1,4 +1,4 @@
-class Queue
+class MyQueue
   attr_accessor :attendees
 
   def initialize
@@ -34,5 +34,9 @@ class Queue
     attendees.sort_by! do |attendee|
       attendee.send(attribute)
     end
+  end
+
+  def empty?
+    count == 0
   end
 end

@@ -6,11 +6,10 @@ class EventReporter
 
   def initialize
     @printer = Printer.new
-    @menu    = Menu.new
     @command = ''
     @args    = ''
-    @queue   = Queue.new
-    @repo    = AttendeeRepo.new
+    @queue   = MyQueue.new
+    # @repo    = AttendeeRepo.new
   end
 
   def run
@@ -60,14 +59,17 @@ class EventReporter
     arg = args[0..1].join(' ')
     case
     when count?(arg)
+      return printer.no_results if queue.empty?
       printer.display_queue_count(queue.count)
     when clear?(arg)
       return printer.fail_message('clear') if queue.attendees.empty?
       queue.clear
       printer.successfully_cleared(queue.count)
     when print?(arg)
+      return printer.no_results if queue.empty?
       print_menu
     when print_by?(arg)
+      return printer.no_results if queue.empty?
       results = queue.print_by_attribute(args[2])
       printer.print_by(results)
     when save_to?(arg)
@@ -97,7 +99,7 @@ class EventReporter
     if args.empty?
       filepath = 'data/event_attendees' + '.csv'
     else
-      filepath = args.flatten + '.csv'
+      filepath = args.join + '.csv'
     end
     @repo = AttendeeRepo.new(filepath)
   end
