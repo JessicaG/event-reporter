@@ -15,6 +15,7 @@ class EventReporter
   def run
     printer.intro
     @command, *@args = get_input.split
+    load_menu([])
     until quit?
       command_menu
       @command, *@args = get_input.split
@@ -34,6 +35,7 @@ class EventReporter
     when 'load'  then load_menu(args)
     when 'queue' then queue_sub_menu(args)
     when 'help'  then help_menu
+    when 'menu'  then printer.display_commands
     when 'quit'  then printer.goodbye
     else
       input_error
@@ -42,6 +44,7 @@ class EventReporter
 
   def help_menu
     arg = args.join
+    printer.help_commands
     case
     when count?(arg)      then printer.description_count
     when clear?(arg)      then printer.description_clear
@@ -50,8 +53,8 @@ class EventReporter
     when find?(arg)       then printer.description_find
     when load?(arg)       then printer.description_load
     when queue?(arg)      then printer.description_queue
-    else
-      printer.display_commands
+    # else
+    #   printer.display_commands
     end
   end
 
@@ -76,7 +79,7 @@ class EventReporter
       return printer.fail_message('save') if queue.attendees.empty?
 
       # queue.save_to(filename)
-      printer.display_save_info(command[3])
+      printer.display_save_info(filename)
     else
       input_error
     end
@@ -97,11 +100,12 @@ class EventReporter
 
   def load_menu(args)
     if args.empty?
-      filepath = 'data/event_attendees' + '.csv'
+      filepath = 'data/event_attendees.csv'
     else
       filepath = args.join + '.csv'
     end
     @repo = AttendeeRepo.new(filepath)
+    printer.file_loaded(filepath)
   end
 
   def find_menu(args)

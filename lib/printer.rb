@@ -5,7 +5,8 @@ class Printer
   def intro
     puts "---------------------------".blue
     puts " Welcome to Event Reporter".white
-    puts "---------------------------\n\n".blue
+    puts "---------------------------\n".blue
+    puts "Type: `Menu`, `Help` or enter a command\n\n"
   end
 
   def incorrect_entry
@@ -23,7 +24,16 @@ class Printer
     puts "`#{'queue'.cyan} #{'clear'.cyan}`                  - clears queue"
     puts "`#{'help'.red}`                         - help menu"
     puts "`#{'help'.cyan} #{' <command>'.blue}`              - command help"
-    puts "`#{'quit'.red}`                         - exit"
+    puts "`#{'menu'.red}`                         - display menu"
+    puts "`#{'quit'.cyan}`                         - exit"
+    puts "------------------------------------------------------------------\n\n"
+  end
+
+  def help_commands
+    puts "\n------------------------------------------------------------------"
+    puts "`#{'help'.red}`                         - help menu"
+    puts "`#{'help'.cyan} #{' <command>'.blue}`              - command help"
+    puts "options: count | clear | print | save to | find | load | queue"
     puts "------------------------------------------------------------------\n\n"
   end
 

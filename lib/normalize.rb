@@ -31,7 +31,8 @@ class Normalize
 
   def home_phone(phone)
     return failure if null?(phone)
-    phone.strip.gsub(/\D/, ' ')
+    raw = phone.gsub(/\D/, '')
+    "(#{raw[0..2]})#{raw[3..5]}-#{raw[5..-1]}"
   end
 
   def street(street)
