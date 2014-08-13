@@ -10,6 +10,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     slop (3.6.0)
+    terminal-table (1.4.5)
 
 PLATFORMS
   ruby
@@ -18,3 +19,4 @@ DEPENDENCIES
   colorize (~> 0.7.3)
   minitest (~> 5.4.0)
   pry
+  terminal-table (~> 1.4.5)

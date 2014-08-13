@@ -1,5 +1,5 @@
 require 'colorize'
-require 'pry'
+require 'terminal-table'
 
 class Printer
   def intro
@@ -102,7 +102,9 @@ class Printer
   end
 
   def print_by(results)
-    print results
+    results.each do |r|
+      puts "#{r.reg_date}\t#{r.first_name}\t#{r.last_name}\t#{r.email_address}\t#{r.home_phone}\t#{r.street}\t#{r.city}\t#{r.state}\t#{r.zipcode}"
+    end
   end
 
 end

@@ -26,6 +26,7 @@ class Queue
   end
 
   def format_output(attendees)
+    attendees.each
 
   end
 
