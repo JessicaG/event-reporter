@@ -57,7 +57,7 @@ class EventReporter
   end
 
   def queue_sub_menu(args)
-    arg = args.join
+    arg = args[0..1].join(' ')
     case
     when count?(arg)
       printer.display_queue_count(queue.count)
@@ -67,6 +67,9 @@ class EventReporter
       printer.successfully_cleared(queue.count)
     when print?(arg)
       print_menu
+    when print_by?(arg)
+      results = queue.print_by_attribute(args[2])
+      printer.print_by(results)
     when save_to?(arg)
       return printer.fail_message('save') if queue.attendees.empty?
 
@@ -116,10 +119,6 @@ class EventReporter
     end
   end
 
-  # def input_error
-  #   puts "error"
-  # end
-
   def print_menu
     return printer.display_queue(queue.attendees) if command[2] != 'by'
 
@@ -156,7 +155,7 @@ class EventReporter
   end
 
   def print_by?(arg)
-    arg == 'print' && arg == 'by'
+    arg == 'print by'
   end
 
   def save_to?(arg)

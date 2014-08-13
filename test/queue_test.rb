@@ -26,7 +26,10 @@ class QueueTest < Minitest::Test
 
   end
 
-  def print_by
+  def test_print_by
+    reporter = Queue.new
+    reporter.add_queury('Johnson')
+    assert_equal reporter.queue.print_by 
   end
 
   def save_to

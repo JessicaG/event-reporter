@@ -24,4 +24,14 @@ class Queue
   def save_to(filename)
     puts 'saving....'
   end
+
+  def format_output(attendees)
+
+  end
+
+  def print_by_attribute(attribute)
+    attendees.sort_by! do |attendee|
+      attendee.send(attribute)
+    end
+  end
 end

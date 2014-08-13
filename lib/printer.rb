@@ -46,9 +46,7 @@ class Printer
     puts '--------------------------------------------------------------------------------'.blue
     return puts "\nNo data to display\n\n".red if queue.empty?
     queue.each do |attendee|
-      attendee.each do |person|
-        puts 'this needs formatting'
-      end
+      print "#{attendee.last_name} #{attendee.first_name}\t#{attendee.email_address} #{attendee.city}\n"
     end
   end
 
@@ -101,6 +99,10 @@ class Printer
 
   def description_queue
     puts "\n#{'`help queue`'.cyan} - The Queue holds all of the data from the current search until it is exported, cleared, or the next search is executed using the #{`find <attribute> <criteria>`.cyan} command."
+  end
+
+  def print_by(results)
+    print results
   end
 
 end
