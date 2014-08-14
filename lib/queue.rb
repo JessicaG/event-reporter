@@ -22,18 +22,16 @@ class MyQueue
   end
 
   def save_to(filename)
-    file = File.open(filename, "w+") do |file|
+    file = File.open("data/#{filename}", "w+") do |file|
       attendees.map do |r|
-      file << [r.first_name, r.last_name, r.email_address, r.zipcode, r.street, r.city, r.state, r.home_phone].join(", ") + "\n"
-    end
-      #csv << (@attendees)
+        file << [r.first_name, r.last_name, r.email_address, r.zipcode, r.street, r.city, r.state, r.home_phone].join(", ") + "\n"
+      end
     end
     puts 'saving....'
   end
 
   def format_output(attendees)
     attendees.each
-
   end
 
   def print_by_attribute(attribute)
