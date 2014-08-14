@@ -7,7 +7,7 @@ class EventReporter
     @printer = Printer.new
     @command = ''
     @args    = ''
-    @queue   = AttendeeQueue.new
+    @queue   = EventQueue.new
   end
 
   def run
@@ -57,6 +57,7 @@ class EventReporter
 
   def queue_sub_menu(args)
     arg = args[0..1].join(' ')
+
     case
     when count?(arg)
       return printer.no_results if queue.empty?
@@ -74,7 +75,8 @@ class EventReporter
       printer.print_by(results)
     when save_to?(arg)
       return printer.fail_message('save') if queue.attendees.empty?
-      printer.display_save_info(filename)
+      queue.save_to(args[-1])
+      printer.display_save_info(args[-1])
     else
       input_error
     end
@@ -102,7 +104,8 @@ class EventReporter
   def find_menu(args)
     return printer.incomplete_query if args.count < 2
     attribute = args[0]
-    criteria  = args[1]
+
+    criteria  = args[1..-1].join(' ')
 
     case attribute
     when 'first_name' then queue.attendees = repo.find_by_first_name(criteria)
@@ -155,6 +158,6 @@ class EventReporter
   end
 
   def save_to?(arg)
-    arg == 'save' && arg == 'to'
+    arg == 'save to'
   end
 end

@@ -16,8 +16,8 @@ class Printer
 
   def display_commands
     puts "\n------------------------------------------------------------------"
-    puts "`#{'load'.cyan} #{'<filename>'.blue}`              - find atendee"
-    puts "`#{'find'.red} #{'<attribute>'.blue} #{'<criteria>'.blue}`  - find atendee"
+    puts "`#{'load'.cyan} #{'<filename>'.blue}`              - find attendee"
+    puts "`#{'find'.red} #{'<attribute>'.blue} #{'<criteria>'.blue}`  - find attendee"
     puts "`#{'queue'.cyan} #{'count'.cyan}`                  - counts attendees in queue"
     puts "`#{'queue print'.red}`                  - displays attendees in queue"
     puts "`#{'queue'.cyan} #{'print by'.cyan} #{'<attribute>'.blue}`   - displays specific attendees"
@@ -120,7 +120,7 @@ class Printer
   def print_by(results)
     rows = Array.new
     results.each do |r|
-      rows << [titleize(r.last_name), titleize(r.first_name), r.email_address, r.zipcode, titleize(r.street), titleize(r.city), r.state, r.home_phone]
+      rows << [titleize(r.last_name), titleize(r.first_name), r.email_address, r.zipcode, titleize(r.street), titleize(r.city), r.state, r.home_phone]      
     end
     table = Terminal::Table.new :headings => ['LAST NAME', 'FIRST NAME', 'EMAIL', 'ZIPCODE', 'CITY', 'STATE', 'ADDRESS', 'PHONE'], :rows => rows
     puts "\n\n#{table}\n\n"
