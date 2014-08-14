@@ -3,6 +3,7 @@ require_relative '../lib/normalize.rb'
 
 class NormalizeTest < Minitest::Test
   attr_reader :normalized, :fail_message
+
   def setup
     @normalized = Normalize.new
     @fail_message = 'no info available'

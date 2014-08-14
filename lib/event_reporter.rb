@@ -42,7 +42,6 @@ class EventReporter
 
   def help_menu
     arg = args.join
-    printer.help_commands
     case
     when count?(arg)      then printer.description_count
     when clear?(arg)      then printer.description_clear
@@ -52,7 +51,7 @@ class EventReporter
     when load?(arg)       then printer.description_load
     when queue?(arg)      then printer.description_queue
     else
-      input_error
+      printer.help_commands
     end
   end
 
@@ -68,14 +67,13 @@ class EventReporter
       printer.successfully_cleared(queue.count)
     when print?(arg)
       return printer.no_results if queue.empty?
-      print_menu
+      printer.display_queue(queue.attendees)
     when print_by?(arg)
       return printer.no_results if queue.empty?
       results = queue.print_by_attribute(args[2])
       printer.print_by(results)
     when save_to?(arg)
       return printer.fail_message('save') if queue.attendees.empty?
-      # queue.save_to(filename)
       printer.display_save_info(filename)
     else
       input_error
