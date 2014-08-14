@@ -40,6 +40,7 @@ class AttendeeRepo
   end
 
   def find_by_street(input)
+    puts input
     attendees.find_all do |attendee|
       attendee.street.downcase == input.downcase
     end

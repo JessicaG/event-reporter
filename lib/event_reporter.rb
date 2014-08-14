@@ -107,7 +107,7 @@ class EventReporter
     case attribute
     when 'first_name' then queue.attendees = repo.find_by_first_name(criteria)
     when 'last_name'  then queue.attendees = repo.find_by_last_name(criteria)
-    when 'email'      then queue.attendees = repo.find_by_email(criteria)
+    when 'email'      then queue.attendees = repo.find_by_email_address(criteria)
     when 'phone'      then queue.attendees = repo.find_by_phone(criteria)
     when 'street'     then queue.attendees = repo.find_by_street(criteria)
     when 'city'       then queue.attendees = repo.find_by_city(criteria)
