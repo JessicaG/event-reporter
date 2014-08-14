@@ -7,12 +7,15 @@ class Normalize
 
   def regdate(date)
     return failure if null?(date)
-    date.strip[0].gsub(/-/, '/')
+    '11/12/08 10:47'
+    date = date.strip.split(' ')
+    date[0]
   end
 
   def regtime(time)
     return failure if null?(time)
-    time.strip[1]
+    time = time.strip.split(' ')
+    time[1]
   end
 
   def first_name(name)

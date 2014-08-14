@@ -56,7 +56,4 @@ class NormalizeTest < Minitest::Test
     assert_equal '02703', normalized.zipcode('2703')
   end
 
-
-
-
 end
