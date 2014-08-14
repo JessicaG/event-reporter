@@ -1,7 +1,8 @@
 require 'csv'
 
 class EventReporter
-  attr_reader :printer, :command, :args, :repo, :queue
+  attr_reader   :printer, :command, :args, :queue
+  attr_accessor :repo
 
   def initialize
     @printer = Printer.new
@@ -66,8 +67,9 @@ class EventReporter
       return printer.fail_message('clear') if queue.attendees.empty?
       queue.clear
       printer.successfully_cleared(queue.count)
-    when print?(arg)
+    when print?(args)
       return printer.no_results if queue.empty?
+      printer.display_queue(queue.attendees)
       print_menu
     when print_by?(arg)
       return printer.no_results if queue.empty?

@@ -19,7 +19,7 @@ class AttendeeQueueTest < Minitest::Test
     reporter.add_query('oranges')
     reporter.add_query('bannas')
     reporter.clear
-    assert reporter.queue.empty?
+    assert_equal 0, reporter.queue.count
   end
 
   def test_print_by
