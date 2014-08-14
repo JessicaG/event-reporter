@@ -1,15 +1,13 @@
 require 'csv'
-require 'pry'
 
 class EventReporter
-  attr_reader :printer, :command, :menu, :args, :repo, :queue
+  attr_reader :printer, :command, :args, :repo, :queue
 
   def initialize
     @printer = Printer.new
     @command = ''
     @args    = ''
-    @queue   = MyQueue.new
-    # @repo    = AttendeeRepo.new
+    @queue   = EventQueue.new
   end
 
   def run
@@ -53,8 +51,8 @@ class EventReporter
     when find?(arg)       then printer.description_find
     when load?(arg)       then printer.description_load
     when queue?(arg)      then printer.description_queue
-    # else
-    #   printer.display_commands
+    else
+      input_error
     end
   end
 
@@ -71,7 +69,7 @@ class EventReporter
       printer.successfully_cleared(queue.count)
     when print?(arg)
       return printer.no_results if queue.empty?
-      print_menu
+      printer.display_queue(queue.attendees)
     when print_by?(arg)
       return printer.no_results if queue.empty?
       results = queue.print_by_attribute(args[2])
@@ -111,7 +109,8 @@ class EventReporter
   def find_menu(args)
     return "\nIncomplete Query - 'find <attribute> <criteria>'\n" if args.count < 2
     attribute = args[0]
-    criteria  = args[1]
+
+    criteria  = args[1..-1].join(' ')
 
     case attribute
     when 'first_name' then queue.attendees = repo.find_by_first_name(criteria)
@@ -123,13 +122,6 @@ class EventReporter
     when 'state'      then queue.attendees = repo.find_by_state(criteria)
     when 'zipcode'    then queue.attendees = repo.find_by_zipcode(criteria)
     end
-  end
-
-  def print_menu
-    return printer.display_queue(queue.attendees) if command[2] != 'by'
-
-    #repo.find_by(command[4])
-    puts "sorting something to print here..."
   end
 
   def load?(arg)
