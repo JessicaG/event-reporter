@@ -60,6 +60,7 @@ class EventReporter
 
   def queue_sub_menu(args)
     arg = args[0..1].join(' ')
+
     case
     when count?(arg)
       return printer.no_results if queue.empty?
@@ -77,9 +78,8 @@ class EventReporter
       printer.print_by(results)
     when save_to?(arg)
       return printer.fail_message('save') if queue.attendees.empty?
-
-      # queue.save_to(filename)
-      printer.display_save_info(filename)
+      queue.save_to(args[-1])
+      printer.display_save_info(args[-1])
     else
       input_error
     end
@@ -165,6 +165,6 @@ class EventReporter
   end
 
   def save_to?(arg)
-    arg == 'save' && arg == 'to'
+    arg == 'save to'
   end
 end
